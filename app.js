@@ -11,7 +11,7 @@ const CHECK_ITEMS = [
   { id: 'c1', name: '外观',       standard: '表面无划伤、碰伤、毛刺、油污' },
   { id: 'c2', name: '关键尺寸',   standard: '符合图纸标注公差范围' },
   { id: 'c3', name: '装配质量',   standard: '间隙均匀，转动顺畅无异响' },
-  { id: 'c4', name: '标识标签',   standard: '型号、批次、日期清晰可辨且位置正确' },
+  { id: 'c4', name: '标识标签',   standard: '标签内容与实物一致，字迹清晰不褪色' },
   { id: 'c5', name: '包装状态',   standard: '包装完好，无破损、受潮、挤压' },
   { id: 'c6', name: '功能测试',   standard: '按作业标准试运行，功能正常' }
 ];
