@@ -203,6 +203,55 @@ function clearAll() {
 }
 
 /* ---------- 9. 初始化 ---------- */
+/* ---------- 10. 导出 CSV ---------- */
+function exportCSV() {
+  /* CSV 转义：字段里出现逗号、引号、换行时必须用双引号包住 */
+  const esc = function (v) {
+    const s = String(v == null ? '' : v);
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+
+  const rows = [['日期', '批次号', '点检人', '点检项目', '判定标准', '结果', '备注']];
+
+  CHECK_ITEMS.forEach(function (item) {
+    rows.push([
+      state.date,
+      state.batch,
+      state.inspector,
+      item.name,
+      item.standard,
+      RESULT_LABELS[state.results[item.id]] || '未判定',
+      state.notes[item.id] || ''
+    ]);
+  });
+
+  /* 汇总行：合格率 */
+  let passCount = 0, failCount = 0;
+  CHECK_ITEMS.forEach(function (item) {
+    if (state.results[item.id] === 'pass') passCount++;
+    if (state.results[item.id] === 'fail') failCount++;
+  });
+  const judged = passCount + failCount;
+  const rate = judged === 0 ? '--' : Math.round(passCount / judged * 100) + '%';
+
+  rows.push([]);
+  rows.push(['合格率', rate]);
+
+  const csv = rows.map(function (r) {
+    return r.map(esc).join(',');
+  }).join('\r\n');
+
+  /* 开头的 \ufeff 是 BOM。没有它，Excel 会把 UTF-8 当成系统编码读，中文变乱码 */
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '点检记录_' + (state.date || '未填日期') + '_' + (state.batch || '无批次') + '.csv';
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
 function init() {
   load();
 
@@ -234,7 +283,8 @@ function init() {
     save();
   });
 
-  document.getElementById('btnClear').addEventListener('click', clearAll);
+document.getElementById('btnExport').addEventListener('click', exportCSV);  
+document.getElementById('btnClear').addEventListener('click', clearAll);
 
   renderRows();
   renderSummary();
