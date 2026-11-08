@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>质量点检清单</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hd">
+    <div>
+      <h1>质量点检清单</h1>
+      <p class="hd-sub">班次开工前逐项点检，判定结果自动保存在本机浏览器</p>
+    </div>
+    <span id="saveState" class="save-state">已就绪</span>
+  </header>
+
+  <!-- 基本信息 -->
+  <section class="card">
+    <div class="card-hd">基本信息</div>
+    <div class="card-bd meta-grid">
+      <label class="field">
+        <span class="field-lbl">点检日期</span>
+        <input type="date" id="inpDate">
+      </label>
+      <label class="field">
+        <span class="field-lbl">批次号</span>
+        <input type="text" id="inpBatch" placeholder="例：20261108-A">
+      </label>
+      <label class="field">
+        <span class="field-lbl">点检人</span>
+        <input type="text" id="inpInspector" placeholder="填写姓名">
+      </label>
+    </div>
+  </section>
+
+  <!-- 点检表格 -->
+  <section class="card">
+    <div class="card-hd">
+      <span>点检项目</span>
+      <span class="hint">点击右侧按钮记录判定，「免检」不计入合格率</span>
+    </div>
+    <table class="grid">
+      <thead>
+        <tr>
+          <th class="col-no">#</th>
+          <th class="col-name">点检项目</th>
+          <th class="col-std">判定标准</th>
+          <th class="col-res">结果</th>
+          <th class="col-note">备注</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+  <!-- 汇总 -->
+  <section class="card">
+    <div class="card-hd">本次汇总</div>
+    <div class="card-bd">
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-num" id="stTotal">0</span>
+          <span class="stat-lbl">总项数</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stDone">0</span>
+          <span class="stat-lbl">已判定</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num st-pass" id="stPass">0</span>
+          <span class="stat-lbl">合格</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num st-fail" id="stFail">0</span>
+          <span class="stat-lbl">不合格</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="stNa">0</span>
+          <span class="stat-lbl">免检</span>
+        </div>
+        <div class="stat stat-rate">
+          <span class="stat-num" id="stRate">--</span>
+          <span class="stat-lbl">合格率</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="btnClear">清空本次</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ft">
+    <span>质量点检清单 · 单机版</span>
+    <span id="ftVersion">v0.1.0</span>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
