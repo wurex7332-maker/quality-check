@@ -363,6 +363,17 @@ body {
   border-color: var(--fail);
 }
 
+.btn-primary {
+  color: #fff;
+  background: var(--blue-600);
+  border-color: var(--blue-600);
+}
+
+.btn-primary:hover {
+  background: var(--blue-700);
+  border-color: var(--blue-700);
+}
+
 /* ---------- 页脚 ---------- */
 
 .ft {
